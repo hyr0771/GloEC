@@ -8,5 +8,5 @@ The annotation of enzyme function is a fundamental challenge in industrial biote
 ## In the Datasets：
 
 ## about
-title = {GloEC: a hierarchical-aware global model for enzyme function prediction}
-Contact: If you have any questions or suggestions with the code, please let us know. Contact Yiran Huang at hyr@gxu.edu.cn
+title = {GloEC: a hierarchical-aware global model for enzyme function prediction}.
+<br>Contact: If you have any questions or suggestions with the code, please let us know. Contact Yiran Huang at hyr@gxu.edu.cn
