@@ -10,8 +10,10 @@ The annotation of enzyme function is a fundamental challenge in industrial biote
   <br>"config_util.py" is the hyperparameter file for GloEC.
 
 ## In the Datasets：
-  Run "binaryC.py" to get the performance of binary classification of DiffRS-net.
-  <br>Run "multiC.py" to get the performance of multi-classification of DiffRS-net.
+  "basic training dataset "is used in the development of GloEC model, as well as 10-fold cross-validated ablation experiments.
+  <br>"New-438" is the latest enzyme to be included in the Swiss-port database, which contains 438 samples.
+  <br>"COFACTOR-237" has been proved to be a tough dataset in the field of enzyme function prediction, and we use it for cross-dataset validation.
+  <br>"Isoenzyme dataset" is an enzyme subtype dataset containing 6318 enzyme sequences.
 ## about
 title = {GloEC: a hierarchical-aware global model for enzyme function prediction}
 <br>Contact: If you have any questions or suggestions with the code, please let us know. Contact Yiran Huang at hyr@gxu.edu.cn
