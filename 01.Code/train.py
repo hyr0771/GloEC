@@ -12,7 +12,7 @@ from config_util import Config
 from sklearn.model_selection import StratifiedKFold
 from tqdm import tqdm
 
-# 屏蔽警告
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -168,7 +168,6 @@ def kfold_train(config, now_time):
             time_used = time.time() - start_time
             logger.info('epoch%d -train: loss:%.4f   time:%.1fs' % (epoch, train_loss, time_used))
 
-            # 什么时候跑验证集合？
             if epoch >= config.kfold_epoch - 10:
                 # 训练完一次就验证集跑一次
                 with torch.no_grad():
@@ -179,7 +178,7 @@ def kfold_train(config, now_time):
                              eval_perform_dict['layer_4']['f1']))
                 logger.info('lr = ' + str(scheduler.get_last_lr()))
                 lr_controller.look_parameters(eval_perform_dict['layer_1']['f1'], model, scheduler,
-                                              fold=fold)  # 返回True表示该下降学习率了
+                                              fold=fold) 
                 if lr_controller.earl_stop:
                     logger.info('earl stop')
                     break
@@ -212,5 +211,5 @@ if __name__ == '__main__':
     else:
         train(config, now_time)
     # train(config, now_time)
-    # 全数据集哪用做交叉验证啦傻逼玩意
+
 
