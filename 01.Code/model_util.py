@@ -44,7 +44,6 @@ def get_model(config, label_map, class_num=7):
 
     if config.model_name == 'Transformer':
         # model = Transformer(config, char_map, label_map)
-        # # 设置变更模型参数 # map_location='cpu' 在本机器上训练测试时要加上,免得报错
         # if config.is_continue_train:
         #     if config.device == 'cpu':
         #         pretrained_dict = torch.load(config.model_save_path + config.model_type + '/' + config.model_name +
@@ -59,7 +58,6 @@ def get_model(config, label_map, class_num=7):
     elif config.model_name == 'CDIL_cnn':
         # model = CDIL_CNN(len(char_map), config.embed_dim, class_num, config.CDIL_cnn.HIDDEN_CHANNEL)
         return '把上面的取消注释'
-        # 设置变更模型参数 # map_location='cpu' 在本机器上训练测试时要加上,免得报错
 
     elif config.model_name == 'HiAGM':
         model = HiAGM(config, label_map)
@@ -208,10 +206,10 @@ def layer_evaluate(predict_batch_list, layer_1_label, layer_2_label, layer_3_lab
 def get_other_dataset_perform(label_map, predict_file):
     enz_data = pd.read_csv(predict_file)
     true_ec_column = enz_data.iloc[:, 1:2].values  # 获取所有EC号
-    child1_column = enz_data.iloc[:, 2:3].values  # 获取所有EC号
-    child2_column = enz_data.iloc[:, 3:4].values  # 获取所有EC号
-    child3_column = enz_data.iloc[:, 4:5].values  # 获取所有EC号
-    child4_column = enz_data.iloc[:, 5:6].values  # 获取所有EC号
+    child1_column = enz_data.iloc[:, 2:3].values 
+    child2_column = enz_data.iloc[:, 3:4].values  
+    child3_column = enz_data.iloc[:, 4:5].values  
+    child4_column = enz_data.iloc[:, 5:6].values  
     layer_1_label, layer_1_predict = [], []
     layer_2_label, layer_2_predict = [], []
     layer_3_label, layer_3_predict = [], []
