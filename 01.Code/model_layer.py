@@ -21,7 +21,7 @@ def get_hierarchy_relations(label_map):
             my_father = label_map[label_layer[0] + '.' + label_layer[1] + '.' + label_layer[2]]
             hierar_relations[my_father].append(value)
 
-    return hierar_relations   # 返回树的连接关系的有关字典如[1:{11,5,9,4}....]
+    return hierar_relations 
 
 
 class ClassificationLoss(torch.nn.Module):
