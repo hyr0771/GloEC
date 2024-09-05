@@ -47,7 +47,6 @@ def predict(config):
     #       (f1_dict['layer_1'], f1_dict['layer_2'], f1_dict['layer_3'], f1_dict['layer_4']))
 
 def run(data_loader, model, label_map, config, dataset_name, split_area=None, label_num_dict=None):
-    # split_area label_num_dict 只有在kfold计算时才用到，split_area表示按照什么比例划分，label_num_dict是一个字典，表示每种label在训练集中的个数
     predict_probs = []
     true_label = []
     name_list = []
@@ -75,13 +74,12 @@ def run(data_loader, model, label_map, config, dataset_name, split_area=None, la
     return perform_dict
 
 def k_fold_predict(config, istest_one=False, issplit_area=False):
-    # istest_one 是否自己一个个进行创尝试？
     # 统计第四层阶级先
     kfold_num = 10
     ds = pd.read_csv(config.kfold_dataset_csv)
-    name_column = ds.iloc[:, 0:1].values  # 获取所有EC号
-    sequence_column = ds.iloc[:, 1:2].values  # 获取所有EC号
-    ecnum_column = ds.iloc[:, 2:3].values  # 获取所有EC号
+    name_column = ds.iloc[:, 0:1].values  
+    sequence_column = ds.iloc[:, 1:2].values  
+    ecnum_column = ds.iloc[:, 2:3].values  
 
     # 只统计第四层
     label_num_dict = {}
@@ -94,7 +92,6 @@ def k_fold_predict(config, istest_one=False, issplit_area=False):
 
     print(label_num_dict)
     # 字典排序：
-    # 我为什么要排序啊？像个傻逼一样？？？？
     split_area = [0, 5, 10, 20, 50, 100]  # 小0到5叫0列表
     model_index = 'ESM_07041450'
     label_map = get_label_map(config)
@@ -186,11 +183,9 @@ def k_fold_predict(config, istest_one=False, issplit_area=False):
 
 
 def isoform_single_predict():
-    # 我真是傻逼
     model_index = 'ESM_06131214'
     isoform_name = 'P26361-3'
     label_map = get_label_map(config)
-    # 获得你要测试的isoform的pt,怎么获得？跨文件查找
     isoform_esm_pt = get_esm_data(isoform_name)
     model = get_model(config, label_map, class_num=len(label_map))
     model.load_state_dict(torch.load('../Save_model/' + model_index + '.pth', map_location=torch.device('cpu')))
