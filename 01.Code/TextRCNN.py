@@ -44,7 +44,7 @@ class TextRCNN(torch.nn.Module):
 
     def get_parameter_optimizer_dict(self):
         params = list()
-        params.append({'params': self.char_embedding.parameters()})  # 存在大问题，为什么Edbedding层的这个也要加进来进行优化？
+        params.append({'params': self.char_embedding.parameters()})  
         params.append({'params': self.rnn.parameters()})
         params.append({'params': self.convs.parameters()})
         params.append({'params': self.linear.parameters()})
