@@ -29,7 +29,6 @@ class ESM_Model(nn.Module):
         x = self.ln1(x)
         x = self.dropout(x)
         x = torch.relu(x)
-        # 要不要扩充一个维度？答案是要的
         x = x.view(x.shape[0], 1, -1)
         x = self.attention(x)
         x = self.dropout(x)
@@ -163,7 +162,6 @@ class MyGCNModule(nn.Module):
         nn.init.xavier_uniform_(self.loop_weight)
         nn.init.xavier_uniform_(self.loop_bias)
 
-    # 这里都干了些啥
     def forward(self, inputs):  # (291, 32)
         # a_input = self.attention(inputs)
         message_ = torch.zeros_like(inputs).to(self.config.device)  # batch, N, in_dim
