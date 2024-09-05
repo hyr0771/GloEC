@@ -99,7 +99,6 @@ class HiAGM(nn.Module):
             # pad_x = self.pad[index](x)
             # F.pad(x, pad, mode='constant', value=0)
             convolution = torch.relu(conv(x))
-            # 取最大值还是取均值咯?????取均值好一点
             mean_x = torch.mean(convolution, dim=2)
             # top_x = torch.topk(convolution, k=1, dim=1)[0].view(x.size(0), -1)
             # top_x = top_x.unsqueeze(1)
@@ -129,13 +128,12 @@ class StructureEncoder(nn.Module):
                 # self.hierarchy_id_prob[self.label_map[p]][self.label_map[c]] = self.hierarchy_prob[p][c]
                 self.node_prob_from_child[int(self.label_map[p])][int(self.label_map[c])] = 1.0   # 子节点到父节点的概率必定为1
                 self.node_prob_from_parent[int(self.label_map[c])][int(self.label_map[p])] = self.hierarchy_prob_dic[p][c] # 父节点到子节点的概率由概率表决定
-        #  node_prob_from_parent: row means parent, col refers to children  # 行为爸，列为子
+        #  node_prob_from_parent: row means parent, col refers to children  
 
-        # 这里这个model还可以是TreeLSTM 参考源代码就行
         self.model = MyGCNModule(config=config, num_nodes=len(self.label_map),
                                 from_child_matrix=self.node_prob_from_child,
                                 from_parent_matrix=self.node_prob_from_parent,
-                                in_dim=32,          # 传入HierarchyGCN时， 数据的特征是(batch * 类别数 * 特征维度)  特征维度256维
+                                in_dim=32,         
                                 dropout=0.1)
 
     def forward(self, inputs):
@@ -227,7 +225,7 @@ class HierarchyGCNModule(nn.Module):
 
         self.loop_gate = Parameter(torch.Tensor(in_dim, 1))  # 循环门（300,1）
         self.dropout = nn.Dropout(p=dropout)
-        self.reset_parameters()  # 重置上面的参数？
+        self.reset_parameters()  
 
     # 初始化一些矩阵
     def reset_parameters(self):
@@ -239,13 +237,11 @@ class HierarchyGCNModule(nn.Module):
         for param in [self.edge_bias, self.out_edge_bias, self.bias_gate]:
             nn.init.zeros_(param)  # 使用0对tensor赋值
 
-    # 这里都干了些啥
     def forward(self, inputs):
         """
         :param inputs: torch.FloatTensor, (batch_size, N, in_dim)
         :return: message_ -> torch.FloatTensor (batch_size, N, in_dim)
         """
-        # 信息聚合
 
         h_ = inputs  # batch, N, in_dim
         # 产生一个和h_维度相同的全0矩阵
@@ -284,7 +280,7 @@ class HierarchyGCNModule(nn.Module):
 
         return self.activation(message_)  # ReLu()
 
-# 自己改一改层级结构
+
 class MyGCNModule(nn.Module):
     def __init__(self,
                  config,
@@ -337,7 +333,7 @@ class MyGCNModule(nn.Module):
         self.loop_bias = nn.Parameter(torch.FloatTensor(self.out_channels, 1))
 
         self.activation = nn.ReLU()
-        self.init_parameters()  # 重置上面的参数？
+        self.init_parameters() 
 
 
     def init_parameters(self):
@@ -349,7 +345,7 @@ class MyGCNModule(nn.Module):
         nn.init.xavier_uniform_(self.loop_bias)
 
 
-    # 这里都干了些啥
+
     def forward(self, inputs):  # (291, 32)
         message_ = torch.zeros_like(inputs).to(self.config.device)  # batch, N, in_dim
 
