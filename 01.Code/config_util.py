@@ -14,11 +14,11 @@ class Config(object):
         self.eval_data_path = '../Data/uniport_2022_5/f_eval.csv'                #文件路径
         self.test_data_path = '../Data/uniport_2022_5/f_time_test.csv'                #文件路径
         # self.hiera_json = '../Data/split_c0.9/hierar.json'                 #层级关系文件
-        self.label_map_json = '../Data/uniport_2022_5/f_conti_label_map.json'              #层级关系文件
+        self.label_map_json = '../Data/uniport_2022_5/f_conti_label_map.json'              
         self.data_path = '../Data/uniport_2022_5/'
         self.predict_result_path = '../Data/predict_result/'
         self.weight = '../Data/uniport_2022_5/f_train_weight.json'
-                                             # 是否将输入用成word2vec形式
+
         # self.loss_type = 'CrossEntropyLoss'       # "CrossEntropyLoss"  or  ’BCEWithLogitsLoss‘
 
         # 公共参数
@@ -48,7 +48,7 @@ class Config(object):
         self.use_hierar_penalty = True             # 是否使用层级惩罚
         self.hierar_penalty = 1e-6                  # 层级惩罚项力度  默认值
         self.use_GCN = True
-        self.gcn_layer = 3                          # 0, 1, 2, 3  还差一个4层没搞
+        self.gcn_layer = 3                          
         self.layer_4_weight_degree = 'balenced'     # 第四层平衡程度
 
 
