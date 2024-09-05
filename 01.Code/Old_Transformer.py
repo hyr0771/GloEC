@@ -63,7 +63,7 @@ class Model(nn.Module):
         return out
 
 
-def get_attn_pad_mask(seq_q, seq_k):    # B站视频源码解读
+def get_attn_pad_mask(seq_q, seq_k):   
     batch_size, len_q = seq_q.size()    ### [1,5]    seq_q: [batch_size,sen_len]
     batch_size, len_k = seq_k.size()    # eq(zero) is PAD token
     # 列mask
@@ -74,7 +74,7 @@ def get_attn_pad_mask(seq_q, seq_k):    # B站视频源码解读
     n_attn_mask = np.logical_or(n_l_mask, n_l_mask.transpose(0, 2, 1))      # 或运算上一个转置
     pad_attn_mask = torch.tensor(n_attn_mask)
     # mask = pad_attn_mask.expand(batch_size, len_q, len_k)
-    return pad_attn_mask  # batch_size x len_q x len_k    ###expand()函数，将tensor变形为括号内的维度。expand到的维度 将第一行的数据重复就行了
+    return pad_attn_mask  # batch_size x len_q x len_k    
 
 
 class Encoder(nn.Module):
@@ -117,14 +117,14 @@ class Scaled_Dot_Product_Attention(nn.Module):
         Return:
             self-attention后的张量，以及attention张量
         '''
-        scores = torch.matmul(Q, K.transpose(3, 2)) /math.sqrt(d_k)    #K进行转制
+        scores = torch.matmul(Q, K.transpose(3, 2)) /math.sqrt(d_k)  
         if scale:
-            attention = scores * scale                   #？？？？？？
+            attention = scores * scale                
         # if mask:  # TODO change this
         #     attention = attention.masked_fill_(mask == 0, -1e9)
-        # scores = scores.masked_fill_(mask == 0, -1e9)   应该用哪一种？？
+        # scores = scores.masked_fill_(mask == 0, -1e9) 
 
-        # scores = scores.masked_fill_(mask=attn_mask, value=torch.tensor(-1e9))  # 暂时隐藏掉
+        # scores = scores.masked_fill_(mask=attn_mask, value=torch.tensor(-1e9)) 
 
         p_attn = F.softmax(scores, dim=-1)
         # if dropout is not None:
@@ -158,7 +158,7 @@ class Multi_Head_Attention(nn.Module):
         # 分头怎么理解？
         Q = Q.view(batch_size, -1, self.num_head, self.d_k).transpose(1, 2)   #view函数用来重构张量大小，-1表示自动补齐张量
         K = K.view(batch_size, -1, self.num_head, self.d_k).transpose(1, 2)   #torch.Size([8, 1000, 25])、torch.Size([8, 5, 1000, 5])
-        V = V.view(batch_size, -1, self.num_head, self.d_k).transpose(1, 2)   #transpose维度变换，把第一维与第二维互换，原本维度（batch、L、num_head、d_k），变换之后为（batch、num_head、L、d_k）
+        V = V.view(batch_size, -1, self.num_head, self.d_k).transpose(1, 2)   
 
 
         # if mask:  # TODO
@@ -241,6 +241,5 @@ class Transformer_model(nn.Module):
         out = out.view(out.size(0), -1)  # 将三维张量reshape成二维，然后直接通过全连接层将高维数据映射为classes
         # out = torch.mean(out, 1)    # 也可用池化来做，但是效果并不是很好
         out = self.linear(out)
-        # softmax一下??好像不需要，交叉熵里做了？
         #soft_out = F.softmax(out, dim=-1)
         return out
