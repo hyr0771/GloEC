@@ -55,7 +55,7 @@ def build_vocab(config):
     vocab_dic = {}
     for seq in sequence:
         for word in seq[0]:
-            vocab_dic[word] = vocab_dic.get(word, 0) + 1  # 生产字典
+            vocab_dic[word] = vocab_dic.get(word, 0) + 1 
 
     # print(vocab_dic)
     vocab_list = sorted(vocab_dic.items(), key=lambda x: x[1], reverse=True)  # 排序后生成list
@@ -66,7 +66,7 @@ def build_vocab(config):
     temp_dic[config.PAD] = 0
     vocab_dic = temp_dic
     # vocab_dic = {word_count[0]:idx for idx,word_count in enumerate(vocab_list)}
-    print('整理与排序之后词表')  # 排序应该是没有必要的
+    print('整理与排序之后词表') 
     # print(vocab_dic)
 
 
@@ -288,11 +288,11 @@ def comput_weight(label_num, type='balanced', degree=0.75):
 
 def process_csv_data(path, config, label_map, char_map):
     enz_data = pd.read_csv(path)
-    sequence = enz_data.iloc[:, 2:3].values  # 获取序列号
-    main = enz_data.iloc[:, 5:6].values  # 获取所有EC号
-    child1 = enz_data.iloc[:, 6:7].values  # 获取所有EC号
-    child2 = enz_data.iloc[:, 7:8].values  # 获取所有EC号
-    length = enz_data.iloc[:, 3:4].values  # 获取长度
+    sequence = enz_data.iloc[:, 2:3].values 
+    main = enz_data.iloc[:, 5:6].values 
+    child1 = enz_data.iloc[:, 6:7].values  
+    child2 = enz_data.iloc[:, 7:8].values 
+    length = enz_data.iloc[:, 3:4].values  
 
     # 提取字符串内容和标签
     sequence_list, main_list, child1_list, child2_list = [], [], [], []
@@ -656,8 +656,6 @@ def collate_fn(batch):
     layer_2_list, layer_3_list, layer_4_list = [], [], [], [], [], [], []
 
     for i, (esm, multi_label_onehot, multi_label, layer_1, layer_2, layer_3, layer_4) in enumerate(batch):
-        # 假设dataset返回的是一句句话
-        # layer_2为对应只分类第二层时，处在的编号  这个layer要什么格式的？onehot?
         esm_tensor_list.append(esm)
         multi_label_onehot_list.append(multi_label_onehot)
         multi_label_list.append(multi_label)
@@ -674,7 +672,7 @@ def collate_fn(batch):
     layer_3_list_tensor = torch.tensor(numpy.array(layer_3_list), dtype=torch.long)
 
     all_label = {'one_hot': multi_label_onehot_tensor,
-                 'three_label': multi_label_list,  #用不用转换成tensor?
+                 'three_label': multi_label_list, 
                  'layer_1': layer_1_list,
                  'layer_2': layer_2_list,
                  'layer_3': layer_3_list,
@@ -687,8 +685,6 @@ def other_collate_fn(batch):
     esm_tensor_list, str_ec_list, name_list = [], [], []
 
     for i, (esm, str_ec, name) in enumerate(batch):
-        # 假设dataset返回的是一句句话
-        # layer_2为对应只分类第二层时，处在的编号  这个layer要什么格式的？onehot?
         esm_tensor_list.append(esm)
         str_ec_list.append(str_ec)
         name_list.append(name)
