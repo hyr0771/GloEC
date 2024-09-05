@@ -20,9 +20,6 @@ class Config(object):
         self.weight = '../Data/uniport_2022_5/f_train_weight.json'
                                              # 是否将输入用成word2vec形式
         # self.loss_type = 'CrossEntropyLoss'       # "CrossEntropyLoss"  or  ’BCEWithLogitsLoss‘
-                                                    # BCEWithLogitsLoss‘，用在多分类
-                                                    # BCEWithLogitsLoss是加了sigmod的BCELoss
-                                                    # sigmod输入映射成0到1并输出
 
         # 公共参数
         self.layer = 4                             # 1 , 2, 3 # 必须设置，当前分类的层级,将影响类别数
@@ -32,16 +29,16 @@ class Config(object):
         self.padID = 0                              # char_map中第几个是pad,应该填从0开始数的数字，共有21个，最后为pad，所以填20
         self.embed_dim = 16                         # 16      # 新加入变量  子向量维度
         self.seq_len = 512                          # 512    # 最长句子
-        self.epoch = 160                            # 400epoch11小时，10epoch16.5min
-        self.batch_size = 512                       # mini-batch大小   (放海哥超算试试512)
+        self.epoch = 160                            
+        self.batch_size = 512                       # mini-batch大小 
         self.learning_rate = 0.001
         self.is_dacay = True                        # 是否应用衰减
         self.landa = 0.8                            # 指数衰减指数,越小刚开始下降的越快，越大刚开始下降的越慢
         self.label_length = [7, 67, 210, 1652]
         self.similarity_half_label_length = [7, 67, 210, 1652]
-        self.kfold = 10                             # 10则交叉验证
-        self.sure_full_kfold = False                # 真的要10倍吗？
-        self.kfold_epoch = 40                      # kfold里的交叉验证次数
+        self.kfold = 10                             
+        self.sure_full_kfold = False                
+        self.kfold_epoch = 40                      
         self.kfold_dataset_csv = '../Data/uniport_2022_5/f_train.csv'
         self.kfold_dataset_esm = '../Data/uniport_2022_5/esm_f_train.pt'
         self.kfold_label_map = '../Data/uniport_2022_5/f_conti_label_map.json'
@@ -77,14 +74,14 @@ class Transformer_Config():
     """配置参数"""
     def __init__(self):
         self.encoder_dropout = 0.0  # encoder里面的dropout
-        self.n_head = 8  # 头数
-        self.d_k = 32  # ？？？？  变大好像会增加模型的复杂度
-        self.d_v = 32  # ？？？？
+        self.n_head = 8  
+        self.d_k = 32  
+        self.d_v = 32  
         self.n_layers = 6
 
 
 class CDIL_CNN_Config():
     """配置参数"""
     def __init__(self):
-        self.HIDDEN_CHANNEL = [24, 32, 32, 16]  # 保证最后一位是16就行
+        self.HIDDEN_CHANNEL = [24, 32, 32, 16]
         # self.LAYER = 4
