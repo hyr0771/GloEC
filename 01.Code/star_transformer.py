@@ -66,7 +66,6 @@ class Transformer(torch.nn.Module):
 
 
     def forward(self, batch, length=None):
-        # 函数里定义的函数只能函数内调用
         def _get_non_pad_mask(seq, pad):
             assert seq.dim() == 2
             return seq.ne(pad).type(torch.float).unsqueeze(-1)  #
@@ -172,7 +171,6 @@ class PositionEmbedding(torch.nn.Module):
         super(PositionEmbedding, self).__init__()
 
 
-        # 执行一手from_pretrained的目的是什么
         self.position_enc = nn.Embedding.from_pretrained(
             self.get_sinusoid_encoding_table(seq_max_len + 1,
                                              embedding_dim,
