@@ -164,10 +164,10 @@ def valid_epoch(test_data_loader, model, loss_func, device):
 
 def process_csv_data(path):
     enz_data = pd.read_csv(path)
-    sequence = enz_data.iloc[:, 2:3].values  # 获取序列号
-    main = enz_data.iloc[:, 5:6].values  # 获取所有EC号
-    child1 = enz_data.iloc[:, 6:7].values  # 获取所有EC号
-    child2 = enz_data.iloc[:, 7:8].values  # 获取所有EC号
+    sequence = enz_data.iloc[:, 2:3].values  
+    main = enz_data.iloc[:, 5:6].values 
+    child1 = enz_data.iloc[:, 6:7].values  
+    child2 = enz_data.iloc[:, 7:8].values  
 
     # 提取字符串内容和标签
     contents = []
@@ -183,8 +183,8 @@ def process_csv_data(path):
     return contents, labels1, labels2, labels3
 
 if __name__ == '__main__':
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 设置只有0号的GPU是可见的,超算要求的使用规范
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  # 当电脑有多张显卡时，使用第一张
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  
     print("使用GPU训练" if torch.cuda.is_available() else "使用CPU训练")
 
     config = Config()  # 定义所有参数
@@ -220,9 +220,9 @@ if __name__ == '__main__':
     foldperf = {}  # 每一折模型的表现
     meanF1, meanPre, meanRe = [], [], []
     for kfold, (train_index, test_index) in enumerate(skf.split(contents, labels)):
-        # print(np.array(labels)[test_index])  # 列表索引列表，要先把被索引的转换成ndarry
+        # print(np.array(labels)[test_index]) 
         if kfold >= 1:
-            break  # 提前停止啊！！
+            break
         print('Fold {}'.format(kfold+1))
         #模型数据获取
         X_train, X_test = np.array(contents)[train_index], np.array(contents)[test_index]
